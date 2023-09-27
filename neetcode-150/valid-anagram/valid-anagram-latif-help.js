@@ -10,27 +10,6 @@ What are ways we can approach this without using built in Array methods, such as
 
 */
 
-// Gonna try writing a quick sort
-const quickSort = arr => {
-  // Return array if less than or equal to 1 - an array of 1 length doesn't need to be sorted
-  // Guard Clause
-  if (arr.length <= 1) {
-    return arr;
-  }
-
-  let pivot = arr[0];
-  let leftPart = [];
-  let rightPart = [];
-
-  for (let i = 1; i < arr.length; i++) {
-    arr[i] < pivot ? leftPart.push(arr[i]) : rightPart.push(arr[i]);
-  }
-
-  const result = [...quickSort(leftPart), pivot, ...quickSort(rightPart)];
-  console.log(result);
-  return result;
-};
-
 /**
  *
  * @param {string} s The first word/phrase
@@ -50,35 +29,24 @@ const isAnagram = function (s, t) {
     return false;
   }
 
-  // Quicksort both inputs so they match
-  const sArr = quickSort(s);
-  const tArr = quickSort(t);
+  let hash1 = {};
+  let hash2 = {};
 
   for (let i = 0; i < s.length; i++) {
-    if (sArr[i] !== tArr[i]) {
-      return false;
-    }
+    hash1 = {
+      ...hash1,
+      [s[i]]: hash1[s[i]] ? hash1[s[i]] + 1 : 1,
+    };
+    hash2 = {
+      ...hash2,
+      [t[i]]: hash2[t[i]] ? hash2[t[i]] + 1 : 1,
+    };
   }
-  return true;
-
-  // let hash1 = {};
-  // let hash2 = {};
-
-  // for (let i = 0; i < s.length; i++) {
-  //   hash1 = {
-  //     ...hash1,
-  //     [s[i]]: hash1[s[i]] ? hash1[s[i]] + 1 : 1,
-  //   };
-  //   hash2 = {
-  //     ...hash2,
-  //     [t[i]]: hash2[t[i]] ? hash2[t[i]] + 1 : 1,
-  //   };
-  // }
-  // console.log('hash1', hash1);
-  // console.log('hash2', hash2);
-  // return Object.keys(hash1).every(
-  //   key => hash2.hasOwnProperty(key) && hash2[key] === hash1[key]
-  // );
+  console.log('hash1', hash1);
+  console.log('hash2', hash2);
+  return Object.keys(hash1).every(
+    key => hash2.hasOwnProperty(key) && hash2[key] === hash1[key]
+  );
 };
 
 // Test Data
